@@ -1,106 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Personal Trainer</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <h1>Personal Trainer</h1>
-    <p>Feira Escolar — cálculo, dicas e tabela de alimentos</p>
+    <nav>
+      <button onclick="abrirAba('inicio')">Início</button>
+      <button onclick="abrirAba('login')">Login</button>
+      <button onclick="abrirAba('calculo')">Cálculo</button>
+      <button onclick="abrirAba('respostas')">Respostas</button>
+      <button onclick="pedirSenha()">Criadores</button>
+    </nav>
   </header>
 
-  <nav>
-    <button onclick="abrirAba('inicio')">🏠 Início</button>
-    <button onclick="abrirAba('login')">👤 Login</button>
-    <button onclick="abrirAba('calculo')">📊 Cálculo</button>
-    <button onclick="abrirAba('respostas')">✅ Respostas</button>
-    <button onclick="pedirSenha()">🔑 Criadores</button>
-  </nav>
-
-  <!-- INÍCIO -->
-  <section id="aba-inicio" class="aba card ativa">
+  <!-- Início -->
+  <section id="aba-inicio" class="aba ativa">
     <h2>Bem-vindo!</h2>
-    <p>Use o menu para entrar, calcular e consultar resultados.</p>
+    <p>Use as abas para navegar no sistema do Personal Trainer.</p>
   </section>
 
-  <!-- LOGIN -->
-  <section id="aba-login" class="aba card">
-    <h2>Login do Aluno</h2>
+  <!-- Login -->
+  <section id="aba-login" class="aba">
+    <h2>Login</h2>
     <form id="formLogin">
-      <label>Email:<br><input type="email" id="email" required></label>
-      <label>Nome:<br><input type="text" id="nome" required></label>
-      <label>Idade:<br><input type="number" id="idade" min="7" max="120" required></label>
-      <label>Série:<br>
+      <label>Nome: <input type="text" id="nome" required></label><br>
+      <label>E-mail: <input type="email" id="email" required></label><br>
+      <label>Série: 
         <select id="serie" required>
-          <option value="6">6º ano</option>
-          <option value="7">7º ano</option>
-          <option value="8">8º ano</option>
-          <option value="9">9º ano</option>
-          <option value="1">1º ano</option>
-          <option value="2">2º ano</option>
-          <option value="3">3º ano</option>
-          <option value="completo">Ensino completo</option>
+          <option value="6º">6º</option>
+          <option value="7º">7º</option>
+          <option value="8º">8º</option>
+          <option value="9º">9º</option>
+          <option value="1º">1º</option>
+          <option value="2º">2º</option>
+          <option value="3º">3º</option>
+          <option value="Ensino Completo">Ensino Completo</option>
         </select>
-      </label>
-      <label>Sexo:<br>
-        <select id="sexo" required>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-          <option value="O">Outro</option>
-        </select>
-      </label>
+      </label><br>
+      <label>Peso (kg): <input type="number" id="peso" step="0.1" required></label><br>
+      <label>Altura (m): <input type="number" id="altura" step="0.001" required></label><br>
       <button type="submit">Entrar</button>
     </form>
   </section>
 
-  <!-- CÁLCULO -->
-  <section id="aba-calculo" class="aba card">
-    <h2>Calcular IMC e Meta</h2>
+  <!-- Cálculo -->
+  <section id="aba-calculo" class="aba">
+    <h2>Cálculo</h2>
     <form id="formCalculo">
-      <label>Peso atual (kg):<br><input type="number" id="peso" step="0.1" required></label>
-      <label>Altura (m):<br><input type="number" id="altura" step="0.001" required></label>
-      <label>Peso desejado (kg):<br><input type="number" id="pesoDesejado" step="0.1" required></label>
-
-      <label>Nível de atividade física:<br>
+      <label>Peso desejado (kg): <input type="number" id="pesoDesejado" step="0.1" required></label><br>
+      <label>Atividade física:
         <select id="atividade" required>
-          <option value="sedentario">Sedentário</option>
-          <option value="leve">Leve (1-2x/semana)</option>
-          <option value="moderado">Moderado (3-5x/semana)</option>
-          <option value="intenso">Intenso (diário)</option>
+          <option value="leve">Leve</option>
+          <option value="moderada">Moderada</option>
+          <option value="intensa">Intensa</option>
         </select>
-      </label>
-
-      <label>Objetivo principal:<br>
+      </label><br>
+      <label>Objetivo:
         <select id="objetivo" required>
-          <option value="massa">Ganhar massa muscular</option>
+          <option value="massa">Ganhar massa</option>
           <option value="gordura">Perder gordura</option>
-          <option value="manter">Manter peso e saúde</option>
+          <option value="manter">Manter peso</option>
         </select>
-      </label>
-
+      </label><br>
       <button type="submit">Calcular</button>
     </form>
   </section>
 
-  <!-- RESPOSTAS -->
-  <section id="aba-respostas" class="aba card">
-    <h2>Resultados</h2>
+  <!-- Respostas -->
+  <section id="aba-respostas" class="aba">
+    <h2>Respostas</h2>
     <div id="respostas"></div>
   </section>
 
-  <!-- CRIADORES -->
-  <section id="aba-criadores" class="aba card">
-    <h2>📂 Área dos Criadores</h2>
+  <!-- Criadores -->
+  <section id="aba-criadores" class="aba">
+    <h2>Histórico dos Alunos</h2>
     <div id="dadosCriadores"></div>
-    <button onclick="limparHistorico()">🗑 Limpar histórico</button>
+    <button onclick="limparHistorico()">Limpar histórico</button>
   </section>
-
-  <footer>
-    <p>Feira Escolar • Desenvolvido para demonstração educativa</p>
-  </footer>
 
   <script src="script.js"></script>
 </body>
