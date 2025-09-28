@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Tela inicial -->
+  <!-- Tela Inicial -->
   <section id="telaInicio" class="tela-inicial">
     <h1>Personal Trainer</h1>
-    <button onclick="mostrarLogin()">Ir para Login</button>
+    <button onclick="mostrarLogin()">Login</button>
   </section>
 
   <!-- Login -->
@@ -32,12 +32,19 @@
           <option value="Ensino completo">Ensino completo</option>
         </select>
       </label>
-      <button type="submit">Entrar</button>
+      <button type="submit">Ir para Cálculo</button>
     </form>
   </section>
 
-  <!-- Resultado do aluno -->
-  <section id="abaAluno" class="aba">
+  <!-- Área de Cálculo -->
+  <section id="abaCalculo" class="aba">
+    <h2>Cálculo de IMC</h2>
+    <p>Revise seus dados e clique em "Calcular".</p>
+    <button id="btnCalcular">Calcular</button>
+  </section>
+
+  <!-- Área de Resposta -->
+  <section id="abaResposta" class="aba">
     <h2>Resultado</h2>
     <table>
       <thead>
@@ -48,7 +55,8 @@
       <tbody id="tabelaResultado">
       </tbody>
     </table>
-    <button onclick="mostrarLogin()">Voltar</button>
+    <button onclick="acessarCriador()">Área do Criador</button>
+    <button onclick="mostrarLogin()">Voltar ao Login</button>
   </section>
 
   <!-- Área do Criador -->
@@ -63,6 +71,7 @@
       <tbody id="tabelaCriador">
       </tbody>
     </table>
+    <button onclick="mostrarLogin()">Voltar</button>
   </section>
 
   <script src="script.js"></script>
