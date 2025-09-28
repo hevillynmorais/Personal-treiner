@@ -3,30 +3,147 @@
   --card:#111;
   --gold:#D4AF37;
   --muted:#bfbfbf;
+  --hover:#f0c846;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Inter,Arial,Helvetica,sans-serif;
   background:var(--bg);
   color:var(--gold);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
+
+/* HEADER */
 header{
   padding:18px;
   text-align:center;
   border-bottom:1px solid rgba(212,175,55,0.06);
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,0.01));
 }
-header h1{margin:0;font-size:1.6rem;color:var(--gold)}
-.aba{display:none;padding:18px}
-.aba.ativa{display:block}
+header h1{margin:0;font-size:1.6rem;color:var(--gold);}
+header p{margin:6px 0 0;color:var(--muted);font-size:0.95rem;}
+
+/* NAV */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+  padding:12px;
+}
+nav button{
+  background:var(--gold);
+  color:#070707;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+  transition:0.2s;
+}
+nav button:hover{
+  background:var(--hover);
+  transform:translateY(-2px);
+}
+
+/* ABA */
+.aba{display:none;padding:18px;}
+.aba.ativa{display:block;}
+
+/* CARD */
 .card{
   background:var(--card);
   border:1px solid rgba(212,175,55,0.06);
   border-radius:12px;
   margin:12px auto;
-  max-width:500px;
+  max-width:980px;
   padding:16px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.2);
+  box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  color:var(--gold);
 }
-input,select,button{margin:6px 0;display:block;width:100%;padding:8px;border-radius:6px;border:1px solid #999;background:#111;color:var(--gold)}
-button{cursor:pointer}
+
+/* FORMULÁRIOS */
+form label{
+  display:block;
+  margin:10px 0;
+  color:var(--muted);
+  font-weight:600;
+}
+input[type="text"], input[type="email"], input[type="number"], select{
+  width:90%;
+  max-width:360px;
+  padding:10px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid rgba(212,175,55,0.08);
+  background:rgba(255,255,255,0.02);
+  color:var(--gold);
+  outline:none;
+}
+button[type="submit"]{
+  margin-top:12px;
+  padding:10px 18px;
+  background:var(--gold);
+  color:#070707;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  transition:0.2s;
+}
+button[type="submit"]:hover{background:var(--hover);}
+
+/* TABELAS */
+.table-wrap{overflow:auto;}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+  color:var(--gold);
+}
+th,td{
+  border:1px solid rgba(212,175,55,0.06);
+  padding:8px;
+  text-align:center;
+  font-size:0.95rem;
+}
+th{background:#141414;color:var(--gold);position:sticky;top:0;}
+tr:nth-child(even) td{background:#0b0b0b;}
+tr:nth-child(odd) td{background:#070707;}
+
+/* INPUT PESQUISA */
+#pesquisaAlimento{
+  width:90%; 
+  max-width:500px; 
+  padding:10px; 
+  border-radius:8px; 
+  margin:6px auto 0; 
+  display:block;
+  border:1px solid rgba(212,175,55,0.06); 
+  background:transparent; 
+  color:var(--gold);
+}
+
+/* RODAPÉ */
+footer{
+  padding:12px;
+  text-align:center;
+  color:var(--muted);
+  font-size:0.9rem; 
+  margin-top:10px;
+}
+
+/* LISTAS */
+ul{padding-left:20px;}
+
+/* RESPONSIVIDADE */
+@media (max-width:720px){
+  nav{gap:6px;padding:8px;}
+  header h1{font-size:1.3rem;}
+  th,td{font-size:0.88rem;padding:6px;}
+  input,select{width:94%;}
+}
