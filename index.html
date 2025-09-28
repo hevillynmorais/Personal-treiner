@@ -7,11 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header id="header">
+  <header>
     <h1>Personal Trainer</h1>
+    <p>Feira Escolar — cálculo, dicas e tabela de alimentos</p>
   </header>
 
-  <nav id="menu" style="display:none;">
+  <nav>
+    <button onclick="abrirAba('inicio')">🏠 Início</button>
+    <button onclick="abrirAba('login')">👤 Login</button>
     <button onclick="abrirAba('calculo')">📊 Cálculo</button>
     <button onclick="abrirAba('respostas')">✅ Respostas</button>
     <button onclick="pedirSenha()">🔑 Criadores</button>
@@ -19,13 +22,15 @@
 
   <!-- INÍCIO -->
   <section id="aba-inicio" class="aba card ativa">
-    <button onclick="abrirAba('login'); esconderHeader();">Entrar</button>
+    <h2>Bem-vindo!</h2>
+    <p>Use o menu para entrar, calcular e consultar resultados.</p>
   </section>
 
   <!-- LOGIN -->
   <section id="aba-login" class="aba card">
     <h2>Login do Aluno</h2>
     <form id="formLogin">
+      <label>Email:<br><input type="email" id="email" required></label>
       <label>Nome:<br><input type="text" id="nome" required></label>
       <label>Idade:<br><input type="number" id="idade" min="7" max="120" required></label>
       <label>Série:<br><input type="text" id="serie" required></label>
@@ -44,8 +49,8 @@
   <section id="aba-calculo" class="aba card">
     <h2>Calcular IMC e Meta</h2>
     <form id="formCalculo">
-      <label>Peso atual (kg):<br><input type="number" id="peso" step="0.1" required></label>
-      <label>Altura (cm):<br><input type="number" id="altura" required></label>
+      <label>Peso atual (kg, ex: 45,3):<br><input type="number" id="peso" step="0.1" required></label>
+      <label>Altura (m, ex: 1,54):<br><input type="number" id="altura" step="0.01" required></label>
       <label>Peso desejado (kg):<br><input type="number" id="pesoDesejado" step="0.1" required></label>
 
       <label>Nível de atividade física:<br>
