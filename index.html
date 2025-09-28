@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Escritório Personal Trainer</title>
+  <title>Personal Trainer</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -33,7 +33,18 @@
       <label>Email:<br><input type="email" id="email" required></label>
       <label>Nome:<br><input type="text" id="nome" required></label>
       <label>Idade:<br><input type="number" id="idade" min="7" max="120" required></label>
-      <label>Série:<br><input type="text" id="serie" required></label>
+      <label>Série:<br>
+        <select id="serie" required>
+          <option value="6">6º ano</option>
+          <option value="7">7º ano</option>
+          <option value="8">8º ano</option>
+          <option value="9">9º ano</option>
+          <option value="1">1º ano</option>
+          <option value="2">2º ano</option>
+          <option value="3">3º ano</option>
+          <option value="completo">Ensino completo</option>
+        </select>
+      </label>
       <label>Sexo:<br>
         <select id="sexo" required>
           <option value="M">Masculino</option>
@@ -49,8 +60,8 @@
   <section id="aba-calculo" class="aba card">
     <h2>Calcular IMC e Meta</h2>
     <form id="formCalculo">
-      <label>Peso atual (kg, ex: 45,3):<br><input type="number" id="peso" step="0.1" required></label>
-      <label>Altura (m, ex: 1,54):<br><input type="number" id="altura" step="0.01" required></label>
+      <label>Peso atual (kg):<br><input type="number" id="peso" step="0.1" required></label>
+      <label>Altura (m):<br><input type="number" id="altura" step="0.001" required></label>
       <label>Peso desejado (kg):<br><input type="number" id="pesoDesejado" step="0.1" required></label>
 
       <label>Nível de atividade física:<br>
