@@ -1,41 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diário Alimentar</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Escritório Personal Trainer</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>Escritório Personal Trainer</h1>
+    <p>Feira Escolar — cálculo, dicas e tabela de alimentos</p>
+  </header>
 
-<section id="aba-alimentos" class="aba card">
-  <h2>🍎 Tabela de Alimentos</h2>
-  <p>Pesquise por nome, categoria ou quantidade.</p>
-  <input type="text" id="pesquisaAlimento" placeholder="🔍 Pesquisar alimento..." onkeyup="filtrarAlimentos()">
+  <nav>
+    <button onclick="abrirAba('inicio')">🏠 Início</button>
+    <button onclick="abrirAba('login')">👤 Login</button>
+    <button onclick="abrirAba('calculo')">📊 Cálculo</button>
+    <button onclick="abrirAba('respostas')">✅ Respostas</button>
+    <button onclick="abrirAba('alimentos')">🍎 Alimentos</button>
+    <button onclick="abrirAba('diario')">📔 Diário Alimentar</button>
+    <button onclick="pedirSenha()">🔑 Criadores</button>
+  </nav>
 
-  <div class="table-wrap">
-    <table id="tabelaAlimentos">
-      <thead>
-        <tr><th>Alimento</th><th>Categoria</th><th>Porção (g)</th><th>Porção (kg)</th><th>Calorias (kcal)</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Arroz branco</td><td>Carboidrato</td><td>100</td><td>0.1</td><td>130</td></tr>
-        <tr><td>Feijão cozido</td><td>Proteína</td><td>100</td><td>0.1</td><td>76</td></tr>
-        <tr><td>Frango grelhado</td><td>Proteína</td><td>100</td><td>0.1</td><td>165</td></tr>
-        <tr><td>Banana</td><td>Fruta</td><td>100</td><td>0.1</td><td>89</td></tr>
-        <tr><td>Ovo cozido</td><td>Proteína</td><td>50</td><td>0.05</td><td>78</td></tr>
-        <!-- Continue adicionando sua lista completa -->
-      </tbody>
-    </table>
-  </div>
+  <!-- INÍCIO -->
+  <section id="aba-inicio" class="aba card ativa">
+    <h2>Bem-vindo!</h2>
+    <p>Use o menu para entrar, calcular e consultar a tabela de alimentos.</p>
+  </section>
 
-  <p class="table-note">*Valores aproximados por porção — uso educativo.</p>
+  <!-- LOGIN -->
+  <section id="aba-login" class="aba card">
+    <h2>Login do Aluno</h2>
+    <form id="formLogin">
+      <label>Email:<br><input type="email" id="email" required></label>
+      <label>Nome:<br><input type="text" id="nome" required></label>
+      <label>Idade:<br><input type="number" id="idade" min="7" max="120" required></label>
+      <label>Série:<br><input type="text" id="serie" required></label>
+      <label>Sexo:<br>
+        <select id="sexo" required>
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+          <option value="O">Outro</option>
+        </select>
+      </label>
+      <button type="submit">Entrar</button>
+    </form>
+  </section>
 
-  <hr>
+  <!-- CÁLCULO -->
+  <section id="aba-calculo" class="aba card">
+    <h2>Calcular IMC e Meta</h2>
+    <form id="formCalculo">
+      <label>Peso atual (kg):<br><input type="number" id="peso" step="0.1" required></label>
+      <label>Altura (cm):<br><input type="number" id="altura" required></label>
+      <label>Peso desejado (kg):<br><input type="number" id="pesoDesejado" step="0.1" required></label>
 
-  <h3>Registrar Refeição</h3>
-  <label>Refeição:
-    <select id="tipoRefeicao">
-      <option value="Café da manhã">Café da manhã</option>
-      <option value="Almoço">Almoço</option>
-      <option
+      <label>Nível de atividade física:<br>
+        <select id="atividade" required>
+          <option value="sedentario">Sedentário</option>
+          <option value="leve">Leve (1-2x/semana)</option>
+          <option value="moderado">Moderado (3-5x/semana)</option>
+          <option value="intenso">Intenso (diário)</option>
+        </select>
+      </label>
+
+      <label>Objetivo principal:<br>
+        <select id="objetivo" required>
+          <option value="massa">Ganhar massa muscular</option>
+          <option value="gordura">Perder gordura</option>
+          <option value="manter">Manter peso e saúde</option>
+        </select>
+      </label>
+
+      <button type="submit">Calcular</button>
+    </form>
+  </section>
+
+  <!-- RESPOSTAS -->
+  <section id="aba-respostas" class="aba card">
+    <h2>Resultados</h2>
+    <div id="respostas"></div>
+  </section>
+
+  <!-- ALIMENTOS -->
+  <section id="aba-alimentos" class="aba card">
+    <h2>🍎 Tabela de Alimentos</h2>
+    <p>Pesquise por nome, categoria ou quantidade.</p>
+    <input type="text" id="pesquisaAlimento" placeholder="🔍 Pesquisar alimento..." onkeyup="filtrarAlimentos()">
+
+    <div class="table-wrap">
+      <table id="tabelaAlimentos">
+        <thead>
+          <tr><th>Alimento</th><th>Categoria</th><th>Porção (g)</th><th>Porção (kg)</th><th>Calorias (kcal)</th></tr>
+        </thead>
+        <tbody>
+          <!-- Adicione os alimentos aqui (como já fornecido anteriormente) -->
+          <tr><td>Arroz branco cozido</td><td>Carboidrato</td><td>100</td><td>0.100</td><td>130</td></tr>
+          <tr><td>Peito de frango grelhado</td><td>Proteína</td><td>150</td><td>0.150</td><td>165</td></tr>
+          <tr><td>Banana (prata)</td><td>Fruta</td><td>100</td><td>0.100</td><td>89</td></tr>
+          <!-- Continue com toda a tabela que você já tem -->
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">*Valores aproximados por porção — uso educativo.</p>
+  </section>
+
+  <!-- DIÁRIO ALIMENTAR -->
+  <section id="aba-diario" class="aba card">
+    <h2>📔 Diário Alimentar</h2>
+    <p>Registre tudo o que você comeu e acompanhe calorias, gramas e kg.</p>
+
+    <label>Nome do alimento:
+      <input type="text" id="nomeAlimentoDiario" placeholder="Ex: Arroz branco, Pizza…">
+    </label>
+
+    <label>Quantidade consumida (g):
+      <input type="number" id="quantidadeAlimentoDiario" placeholder="Ex: 150">
+    </label>
+
+    <label>Calorias por 100g (se alimento não estiver na tabela):
+      <input type="number" id="caloriasAlimentoDiario" placeholder="Ex: 130">
+    </label>
+
+    <button type="button" onclick="adicionarAlimentoDiario()">Adicionar</button>
+
+    <div id="resumoDiario" style="margin-top:12px;"></div>
+  </section>
+
+  <!-- CRIADORES -->
+  <section id="aba-criadores" class="aba card">
+    <h2>📂 Área dos Criadores</h2>
+    <div id="dadosCriadores"></div>
+    <button onclick="limparHistorico()">🗑 Limpar histórico</button>
+  </section>
+
+  <footer>
+    <p>Feira Escolar • Desenvolvido para demonstração educativa</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
