@@ -43,4 +43,12 @@ nav button:hover{filter:brightness(.95);transform:translateY(-2px)}
   margin:12px auto;
   max-width:980px;
   padding:16px;
-  box-shadow:0 8px 30px rgba(0,0,0
+  box-shadow:0 8px 30px rgba(0,0,0,0.2);
+}
+input,select,button{margin:6px 0;display:block;width:100%;padding:8px;border-radius:6px;border:1px solid #999;background:#111;color:var(--gold)}
+button{cursor:pointer}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid rgba(212,175,55,0.1);padding:8px;text-align:center}
+th{background:rgba(212,175,55,0.1)}
+.table-wrap{overflow-x:auto}
+.table-note{font-size:0.8rem;color:var(--muted)}
