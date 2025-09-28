@@ -1,78 +1,142 @@
-let diario = []; // histórico diário temporário
+// --- navegação ---
+function abrirAba(id){
+  document.querySelectorAll('.aba').forEach(a=>a.classList.remove('ativa'));
+  const aba=document.getElementById('aba-'+id);
+  if(aba) aba.classList.add('ativa');
+}
 
+// --- login ---
+document.getElementById('formLogin')?.addEventListener('submit', e=>{
+  e.preventDefault();
+  const nome=document.getElementById('nome').value;
+  alert(`Bem-vindo(a), ${nome}!`);
+  abrirAba('calculo');
+});
+
+// --- calculo ---
+document.getElementById('formCalculo')?.addEventListener('submit', e=>{
+  e.preventDefault();
+  const peso=parseFloat(document.getElementById('peso').value);
+  const altura=parseFloat(document.getElementById('altura').value)/100;
+  const pesoDesejado=parseFloat(document.getElementById('pesoDesejado').value);
+  const atividade=document.getElementById('atividade').value;
+  const objetivo=document.getElementById('objetivo').value;
+
+  const imc=(peso/(altura*altura)).toFixed(1);
+
+  let gasto;
+  switch(atividade){
+    case 'sedentario': gasto=peso*25; break;
+    case 'leve': gasto=peso*30; break;
+    case 'moderado': gasto=peso*35; break;
+    case 'intenso': gasto=peso*40; break;
+  }
+
+  let meta='';
+  switch(objetivo){
+    case 'massa': meta='Consuma proteína adequada e calorias extras.'; break;
+    case 'gordura': meta='Deficit calórico moderado e exercícios regulares.'; break;
+    case 'manter': meta='Mantenha equilíbrio alimentar e atividade física.'; break;
+  }
+
+  document.getElementById('respostas').innerHTML=
+    `<p>IMC: <b>${imc}</b></p>
+     <p>Gasto calórico aproximado: <b>${gasto.toFixed(0)} kcal/dia</b></p>
+     <p>Meta: ${meta}</p>`;
+
+  abrirAba('respostas');
+});
+
+// --- tabela alimentos ---
 function filtrarAlimentos(){
-  const filtro = document.getElementById('pesquisaAlimento').value.toLowerCase();
-  const linhas = document.querySelectorAll('#tabelaAlimentos tbody tr');
-  linhas.forEach(row => {
-    const nome = row.cells[0].innerText.toLowerCase();
-    const categoria = row.cells[1].innerText.toLowerCase();
-    if(nome.includes(filtro) || categoria.includes(filtro)){
-      row.style.display = '';
-    } else {
-      row.style.display = 'none';
-    }
+  const filtro=document.getElementById('pesquisaAlimento').value.toLowerCase();
+  document.querySelectorAll('#tabelaAlimentos tbody tr').forEach(tr=>{
+    tr.style.display=tr.innerText.toLowerCase().includes(filtro)?'':'none';
   });
 }
 
-function adicionarAlimento() {
-  const tipo = document.getElementById('tipoRefeicao').value;
-  const nome = document.getElementById('alimentoEntrada').value.trim();
-  const qtd = parseFloat(document.getElementById('quantidadeEntrada').value);
-
-  if(!nome || !qtd || qtd <= 0){
-    return alert('Preencha corretamente o alimento e a quantidade.');
-  }
-
-  const linhas = document.querySelectorAll('#tabelaAlimentos tbody tr');
-  let achou = false;
-
-  linhas.forEach(row => {
-    if(row.cells[0].innerText.toLowerCase() === nome.toLowerCase()){
-      const calPor100g = parseFloat(row.cells[4].innerText);
-      const kg = qtd / 1000;
-      const calorias = (calPor100g * qtd / 100).toFixed(1);
-
-      diario.push({tipo, nome, qtd, kg, calorias: parseFloat(calorias) });
-      achou = true;
-    }
-  });
-
-  if(!achou){
-    return alert('Alimento não encontrado na tabela. Digite exatamente como está escrito.');
-  }
-
-  atualizarResumo();
-  document.getElementById('alimentoEntrada').value = '';
-  document.getElementById('quantidadeEntrada').value = '';
+// --- criadores ---
+function pedirSenha(){
+  const senha=prompt('Digite a senha:');
+  if(senha==='1234'){
+    abrirAba('criadores');
+    document.getElementById('dadosCriadores').innerHTML=
+      `<ul>
+         <li>Maomo — Desenvolvedor Front-end</li>
+         <li>Akari — Designer de UI</li>
+       </ul>`;
+  } else alert('Senha incorreta');
 }
 
-function atualizarResumo(){
-  if(diario.length === 0){
-    document.getElementById('resumoAlimentacao').innerHTML = '<p>Nenhum alimento registrado ainda.</p>';
+function limparHistorico(){
+  if(confirm('Tem certeza que deseja limpar o histórico?')){
+    document.getElementById('dadosCriadores').innerHTML='';
+  }
+}
+
+// --- diário alimentar livre ---
+let diarioAlimentar = [];
+
+function adicionarAlimentoDiario() {
+  const nome = document.getElementById('nomeAlimentoDiario').value.trim();
+  const qtd = parseFloat(document.getElementById('quantidadeAlimentoDiario').value);
+  let cal100 = parseFloat(document.getElementById('caloriasAlimentoDiario').value);
+
+  if (!nome || !qtd || qtd <= 0) {
+    alert('Preencha corretamente o nome e a quantidade.');
     return;
   }
 
-  let html = '<h4>Resumo diário</h4>';
-  const tipos = [...new Set(diario.map(d=>d.tipo))];
+  // Verifica se o alimento existe na tabela
+  const linhas = document.querySelectorAll('#tabelaAlimentos tbody tr');
+  let encontrado = false;
 
-  tipos.forEach(t=>{
-    html += `<strong>${t}:</strong><ul>`;
-    diario.filter(d=>d.tipo===t).forEach(d=>{
-      html += `<li>${d.nome} — ${d.qtd}g (${d.kg.toFixed(2)}kg) — ${d.calorias} kcal</li>`;
-    });
-    html += '</ul>';
+  linhas.forEach(row => {
+    if (row.cells[0].innerText.toLowerCase() === nome.toLowerCase()) {
+      cal100 = parseFloat(row.cells[4].innerText);
+      encontrado = true;
+    }
   });
 
-  const totalCal = diario.reduce((sum,d)=>sum+d.calorias,0);
-  html += `<p><b>Total de calorias até agora:</b> ${totalCal.toFixed(1)} kcal</p>`;
-
-  const metaCal = 2000; // valor educativo
-  const restante = metaCal - totalCal;
-  if(restante > 0){
-    html += `<p>Você ainda pode consumir <b>${restante.toFixed(0)} kcal</b> para alcançar sua meta.</p>`;
-  } else {
-    html += `<p>Você atingiu ou ultrapassou a meta calórica do dia.</p>`;
+  if (!encontrado && (!cal100 || cal100 <= 0)) {
+    alert('Informe as calorias por 100g para alimentos fora da tabela.');
+    return;
   }
 
-  document.getElementById('resumoAlimentacao').innerHTML = html;
+  const kg = qtd / 1000;
+  const calorias = +(cal100 * qtd / 100).toFixed(1);
+
+  diarioAlimentar.push({ nome, qtd, kg, calorias });
+
+  atualizarResumoDiario();
+
+  // Limpar inputs
+  document.getElementById('nomeAlimentoDiario').value = '';
+  document.getElementById('quantidadeAlimentoDiario').value = '';
+  document.getElementById('caloriasAlimentoDiario').value = '';
+}
+
+function atualizarResumoDiario() {
+  const resumo = document.getElementById('resumoDiario');
+
+  if (!resumo) return;
+
+  if (diarioAlimentar.length === 0) {
+    resumo.innerHTML = '<p>Nenhum alimento registrado ainda.</p>';
+    return;
+  }
+
+  let html = '<h4>Resumo do que você comeu</h4><ul>';
+  diarioAlimentar.forEach(d => {
+    html += `<li>${d.nome} — ${d.qtd} g — ${d.kg.toFixed(2)} kg — ${d.calorias} kcal</li>`;
+  });
+  html += '</ul>';
+
+  const totalCal = diarioAlimentar.reduce((sum, d) => sum + d.calorias, 0);
+  const totalGramas = diarioAlimentar.reduce((sum, d) => sum + d.qtd, 0);
+  const totalKg = diarioAlimentar.reduce((sum, d) => sum + d.kg, 0);
+
+  html += `<p><b>Total:</b> ${totalGramas} g — ${totalKg.toFixed(2)} kg — ${totalCal.toFixed(1)} kcal</p>`;
+
+  resumo.innerHTML = html;
 }
