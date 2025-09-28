@@ -7,6 +7,9 @@ function mostrarLogin(){
   document.getElementById('abaLogin').style.display='block';
 }
 
+// Botão da tela inicial
+document.getElementById('btnLoginInicio').addEventListener('click', mostrarLogin);
+
 // Login
 document.getElementById('formLogin').addEventListener('submit', function(e){
   e.preventDefault();
@@ -30,7 +33,8 @@ function mostrarAba(id){
 document.getElementById('btnCalcular').addEventListener('click', function(){
   if(!alunoAtual) return;
 
-  let status = (alunoAtual.peso / (alunoAtual.altura * alunoAtual.altura) > 25) ? "Acima do peso" : "Normal";
+  let imc = alunoAtual.peso / (alunoAtual.altura * alunoAtual.altura);
+  let status = (imc > 25) ? "Acima do peso" : "Normal";
   alunoAtual.status = status;
 
   // Atualiza tabela aluno
