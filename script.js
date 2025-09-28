@@ -1,38 +1,59 @@
 let usuarios = [];
+let alunoAtual = null;
 
 function mostrarLogin(){
-  document.getElementById('telaInicio').style.display = 'none';
-  mostrarAba('abaLogin');
-}
-
-function mostrarAba(id){
+  document.getElementById('telaInicio').style.display='none';
   document.querySelectorAll('.aba').forEach(a=>a.style.display='none');
-  document.getElementById(id).style.display='block';
+  document.getElementById('abaLogin').style.display='block';
 }
 
+// Login
 document.getElementById('formLogin').addEventListener('submit', function(e){
   e.preventDefault();
   let email = document.getElementById('email').value;
   let altura = parseFloat(document.getElementById('altura').value);
   let peso = parseFloat(document.getElementById('peso').value);
+  let serie = document.getElementById('serie').value;
 
-  let status = (peso / (altura * altura) > 25) ? "Acima do peso" : "Normal";
+  alunoAtual = {email, altura, peso, serie};
+  mostrarAba('abaCalculo');
+  this.reset();
+});
 
-  let usuario = {email, altura, peso, status};
-  usuarios.push(usuario);
+// Mostrar aba específica
+function mostrarAba(id){
+  document.querySelectorAll('.aba').forEach(a=>a.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+// Cálculo IMC
+document.getElementById('btnCalcular').addEventListener('click', function(){
+  if(!alunoAtual) return;
+
+  let status = (alunoAtual.peso / (alunoAtual.altura * alunoAtual.altura) > 25) ? "Acima do peso" : "Normal";
+  alunoAtual.status = status;
 
   // Atualiza tabela aluno
   let tabela = document.getElementById('tabelaResultado');
-  let tr = document.createElement('tr');
-  tr.innerHTML = `<td>${email}</td><td>${altura.toFixed(3)}</td><td>${peso.toFixed(1)}</td><td>${status}</td>`;
-  tabela.appendChild(tr);
+  tabela.innerHTML = `<tr><td>${alunoAtual.email}</td><td>${alunoAtual.altura.toFixed(3)}</td><td>${alunoAtual.peso.toFixed(1)}</td><td>${status}</td></tr>`;
 
-  // Atualiza tabela criador
+  // Adiciona ao histórico geral
+  usuarios.push(alunoAtual);
   let tabelaC = document.getElementById('tabelaCriador');
-  let trC = document.createElement('tr');
-  trC.innerHTML = `<td>${email}</td><td>${email}</td><td>${altura.toFixed(3)}</td><td>${peso.toFixed(1)}</td><td>${status}</td>`;
-  tabelaC.appendChild(trC);
+  tabelaC.innerHTML = '';
+  usuarios.forEach(u=>{
+    tabelaC.innerHTML += `<tr><td>${u.email}</td><td>${u.email}</td><td>${u.altura.toFixed(3)}</td><td>${u.peso.toFixed(1)}</td><td>${u.status}</td></tr>`;
+  });
 
-  mostrarAba('abaAluno');
-  this.reset();
+  mostrarAba('abaResposta');
 });
+
+// Área do Criador com senha
+function acessarCriador(){
+  let senha = prompt("Digite a senha do criador:");
+  if(senha === "2anoA"){
+    mostrarAba('abaCriador');
+  } else{
+    alert("Senha incorreta!");
+  }
+}
