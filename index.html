@@ -12,19 +12,18 @@
   </header>
 
   <nav id="menuNav">
+    <button onclick="abrirAba('inicio')">🏠 Início</button>
     <button onclick="abrirAba('login')">👤 Login</button>
     <button onclick="abrirAba('calculo')">📊 Cálculo</button>
     <button onclick="abrirAba('respostas')">✅ Respostas</button>
     <button onclick="pedirSenha()">🔑 Criadores</button>
   </nav>
 
-  <!-- INÍCIO -->
   <section id="aba-inicio" class="aba card ativa">
     <h2>Bem-vindo!</h2>
-    <p>Use o menu acima para entrar, calcular e consultar resultados.</p>
+    <p>Use o menu acima para entrar, calcular seu IMC e receber recomendações personalizadas.</p>
   </section>
 
-  <!-- LOGIN -->
   <section id="aba-login" class="aba card">
     <h2>Login do Aluno</h2>
     <form id="formLogin">
@@ -38,7 +37,7 @@
           <option value="1">1º Ensino Médio</option>
           <option value="2">2º Ensino Médio</option>
           <option value="3">3º Ensino Médio</option>
-          <option value="C">Ensino Completo</option>
+          <option value="C">Ensino Médio Completo</option>
         </select>
       </label>
       <label>Sexo:<br>
@@ -53,7 +52,6 @@
     </form>
   </section>
 
-  <!-- CÁLCULO -->
   <section id="aba-calculo" class="aba card">
     <h2>Calcular IMC e Meta</h2>
     <form id="formCalculo">
@@ -81,13 +79,11 @@
     </form>
   </section>
 
-  <!-- RESPOSTAS -->
   <section id="aba-respostas" class="aba card">
     <h2>Resultados</h2>
     <div id="respostas"></div>
   </section>
 
-  <!-- CRIADORES -->
   <section id="aba-criadores" class="aba card">
     <h2>📂 Histórico de Alunos</h2>
     <div id="dadosCriadores"></div>
