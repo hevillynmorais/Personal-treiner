@@ -5,7 +5,7 @@ function abrirAba(nome){
 }
 
 // --- armazenamento ---
-let usuarioAtual = null;
+let usuarioAtual = JSON.parse(localStorage.getItem('pt_usuario')); // Tenta carregar o usuário ao iniciar
 let historico = JSON.parse(localStorage.getItem('pt_historico') || '[]');
 
 // --- LOGIN ---
@@ -71,27 +71,43 @@ if(formCalculo){
     historico.push(registro);
     localStorage.setItem('pt_historico', JSON.stringify(historico));
 
-    // Mostrar tabela de respostas
-    respostasDiv.innerHTML = `<table>
-      <tr><th>Nome</th><th>Email</th><th>Peso</th><th>Altura</th><th>IMC</th><th>Status</th><th>Exercício</th><th>Sono</th><th>Alimentação</th></tr>
-      <tr>
-        <td>${registro.nome}</td>
-        <td>${registro.email}</td>
-        <td>${registro.peso}</td>
-        <td>${registro.altura}</td>
-        <td>${registro.imc}</td>
-        <td>${registro.status}</td>
-        <td>${registro.exercicio}</td>
-        <td>${registro.sono}</td>
-        <td>${registro.alimentacao}</td>
-      </tr>
-    </table>`;
+    // Variáveis para o cálculo na tela do aluno
+    const imcFormula = `IMC = Peso (kg) / [Altura (m)]²`;
+    const imcCalculo = `IMC = ${peso} / (${altura.toFixed(3)} * ${altura.toFixed(3)}) = ${imc.toFixed(2)}`;
+
+    // Mostrar a tabela de respostas no formato Campo/Valor
+    respostasDiv.innerHTML = `
+      <h3>Detalhamento do Cálculo</h3>
+      <p><b>Fórmula utilizada:</b> ${imcFormula}</p>
+      <p><b>Seu cálculo:</b> ${imcCalculo}</p>
+      <hr>
+      
+      <h3>Seus Resultados e Recomendações</h3>
+      
+      <table>
+        <tr><th>CAMPO</th><th>VALOR</th></tr>
+        
+        <tr><td>Nome</td><td>${registro.nome}</td></tr>
+        <tr><td>Email</td><td>${registro.email}</td></tr>
+        <tr><td>Série</td><td>${registro.serie}</td></tr>
+        <tr><td>Sexo</td><td>${registro.sexo}</td></tr>
+        
+        <tr><td>Peso</td><td>${registro.peso} kg</td></tr>
+        <tr><td>Altura</td><td>${registro.altura} m</td></tr>
+        <tr><td>IMC</td><td>${registro.imc}</td></tr>
+        <tr><td>Status</td><td>${registro.status}</td></tr>
+        
+        <tr><td>Exercício</td><td>${registro.exercicio}</td></tr>
+        <tr><td>Sono</td><td>${registro.sono}</td></tr>
+        <tr><td>Alimentação</td><td>${registro.alimentacao}</td></tr>
+      </table>`;
 
     abrirAba('respostas');
   });
 }
 
 // --- ÁREA DO CRIADOR ---
+
 function pedirSenha(){
   const senha = prompt('Digite a senha de acesso:');
   if(senha==='2anoA'){
@@ -100,31 +116,56 @@ function pedirSenha(){
   } else alert('Senha incorreta!');
 }
 
+// Gerar lista de nomes clicáveis
 function mostrarCriadores(){
   const div = document.getElementById('dadosCriadores');
-  if(historico.length===0){
-    div.innerHTML='<p>Nenhum registro encontrado.</p>';
+  
+  if(historico.length === 0){
+    div.innerHTML = '<p>Nenhum registro encontrado.</p>';
     return;
   }
 
-  let tabela = `<table>
-    <tr><th>Nome</th><th>Email</th><th>Série</th><th>Sexo</th><th>Peso</th><th>Altura</th><th>IMC</th><th>Status</th><th>Exercício</th><th>Sono</th><th>Alimentação</th></tr>`;
-
-  historico.forEach(r=>{
-    tabela+=`<tr>
-      <td>${r.nome}</td>
-      <td>${r.email}</td>
-      <td>${r.serie}</td>
-      <td>${r.sexo}</td>
-      <td>${r.peso}</td>
-      <td>${r.altura}</td>
-      <td>${r.imc}</td>
-      <td>${r.status}</td>
-      <td>${r.exercicio}</td>
-      <td>${r.sono}</td>
-      <td>${r.alimentacao}</td>
-    </tr>`;
+  // Cria a lista de nomes clicáveis
+  let listaHTML = '<h3>Selecione um Aluno:</h3><ul>';
+  
+  historico.forEach((registro, index) => {
+    // Chama a função mostrarDetalheRegistro ao clicar
+    listaHTML += `<li><button class="link-btn" onclick="mostrarDetalheRegistro(${index})">${registro.nome} (${registro.email})</button></li>`;
   });
-  tabela+='</table>';
-  div.innerHTML=tabela;
+  
+  // O div #detalheRegistro vai aparecer abaixo da lista
+  listaHTML += '</ul><hr><div id="detalheRegistro"></div>';
+  div.innerHTML = listaHTML;
+}
+
+// Exibir a tabela de detalhes do registro selecionado (Formato Campo/Valor)
+function mostrarDetalheRegistro(index) {
+  const registro = historico[index];
+  const detalheDiv = document.getElementById('detalheRegistro');
+
+  if (!registro) {
+    detalheDiv.innerHTML = '<p>Registro não encontrado.</p>';
+    return;
+  }
+
+  // Monta a tabela de detalhes
+  let tabela = `
+    <h4>Detalhes de ${registro.nome}</h4>
+    <table>
+      <tr><th>CAMPO</th><th>VALOR</th></tr>
+      <tr><td>Nome</td><td>${registro.nome}</td></tr>
+      <tr><td>Email</td><td>${registro.email}</td></tr>
+      <tr><td>Série</td><td>${registro.serie}</td></tr>
+      <tr><td>Sexo</td><td>${registro.sexo}</td></tr>
+      <tr><td>Peso</td><td>${registro.peso} kg</td></tr>
+      <tr><td>Altura</td><td>${registro.altura} m</td></tr>
+      <tr><td>IMC</td><td>${registro.imc}</td></tr>
+      <tr><td>Status</td><td>${registro.status}</td></tr>
+      <tr><td>Exercício</td><td>${registro.exercicio}</td></tr>
+      <tr><td>Sono</td><td>${registro.sono}</td></tr>
+      <tr><td>Alimentação</td><td>${registro.alimentacao}</td></tr>
+    </table>
+  `;
+  
+  detalheDiv.innerHTML = tabela;
 }
