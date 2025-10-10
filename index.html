@@ -16,6 +16,7 @@
     <button onclick="abrirAba('login')">👤 Login</button>
     <button onclick="abrirAba('calculo')">📊 Cálculo</button>
     <button onclick="abrirAba('respostas')">✅ Respostas</button>
+    <button onclick="abrirAba('alimentacao')">🍎 Alimentação</button>
     <button onclick="pedirSenha()">🔑 Criadores</button>
   </nav>
 
@@ -55,8 +56,8 @@
   <section id="aba-calculo" class="aba card">
     <h2>Calcular IMC e Meta</h2>
     <form id="formCalculo">
-      <label>Peso atual (kg, ex: 45,3):<br><input type="number" id="peso" step="0.1" required></label>
-      <label>Altura (m, ex: 1,54):<br><input type="number" id="altura" step="0.001" required></label>
+      <label>Peso atual (kg):<br><input type="text" id="peso" required></label>
+      <label>Altura (m):<br><input type="number" id="altura" step="0.001" required></label>
 
       <label>Nível de atividade física:<br>
         <select id="atividade" required>
@@ -72,6 +73,9 @@
           <option value="massa">Ganhar massa muscular</option>
           <option value="gordura">Perder gordura</option>
           <option value="manter">Manter peso e saúde</option>
+          <option value="definir">Definir músculo</option>
+          <option value="emagrecer">Emagrecer</option>
+          <option value="ganhar_forca">Ganhar força</option>
         </select>
       </label>
 
@@ -82,6 +86,17 @@
   <section id="aba-respostas" class="aba card">
     <h2>Resultados</h2>
     <div id="respostas"></div>
+  </section>
+
+  <section id="aba-alimentacao" class="aba card">
+    <h2>Cardápio Alimentar</h2>
+    <form id="formAlimentacao">
+      <label>O que você come normalmente?<br>
+        <textarea id="alimentos" rows="6" placeholder="Liste os alimentos que costuma consumir..." required></textarea>
+      </label>
+      <button type="submit">Analisar</button>
+    </form>
+    <div id="resultadoAlimentacao"></div>
   </section>
 
   <section id="aba-criadores" class="aba card">
