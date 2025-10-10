@@ -4,7 +4,7 @@
  * -- Branco/Claro: #eeeeee (Texto normal)
  */
 
- body {
+body {
   font-family: Arial, sans-serif;
   background-color: #1a1a1a; /* Fundo principal preto */
   color: #eeeeee; /* Cor do texto normal */
@@ -86,7 +86,8 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="number"],
-select {
+select,
+textarea {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -95,6 +96,9 @@ select {
   color: #eeeeee;
   border-radius: 4px;
   box-sizing: border-box;
+  resize: vertical; /* Permite redimensionar textarea verticalmente */
+  font-family: inherit;
+  font-size: 1em;
 }
 
 /* Botão de submit do formulário */
@@ -134,10 +138,12 @@ th {
   color: #ffc107; /* Texto do cabeçalho em dourado */
   text-transform: uppercase;
 }
+
 /* Linhas da tabela com contraste */
 tr:nth-child(even) {
   background-color: #333333;
 }
+
 tr:nth-child(odd) {
   background-color: #2c2c2c;
 }
@@ -152,7 +158,7 @@ tr:nth-child(odd) {
   padding: 5px 0;
   font-size: 1em;
   text-align: left;
-  display: block; 
+  display: block;
   transition: color 0.2s;
 }
 
@@ -187,3 +193,20 @@ footer {
   margin-top: 30px;
   border-top: 1px solid #333333;
 }
+
+/* --- Estilo específico para a nova aba de alimentação (cardápio) --- */
+#aba-alimentacao textarea {
+  min-height: 120px;
+}
+
+#resultadoAlimentacao p {
+  font-size: 1.1em;
+  line-height: 1.4em;
+  margin-top: 10px;
+}
+
+#resultadoAlimentacao h3 {
+  margin-top: 20px;
+  color: #ffc107;
+}
+
