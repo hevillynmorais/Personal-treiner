@@ -1,86 +1,92 @@
 /* Paleta de Cores
- * -- Preto Principal: #1a1a1a (Fundo)
- * -- Dourado/Ouro: #ffc107 (Detalhes e Texto de destaque)
- * -- Branco/Claro: #eeeeee (Texto normal)
- */
+ * -- Preto Principal: #1a1a1a (Fundo)
+ * -- Dourado/Ouro: #ffc107 (Detalhes e Texto de destaque)
+ * -- Branco/Claro: #eeeeee (Texto normal)
+ */
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #1a1a1a; /* Fundo principal preto */
-  color: #eeeeee; /* Cor do texto normal */
-  margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1a1a1a; /* Fundo principal preto */
+  color: #eeeeee; /* Cor do texto normal */
+  margin: 0;
+  padding: 0;
 }
 
 header {
-  background-color: #000000; /* Preto mais escuro para o cabeçalho */
-  color: #ffc107; /* Título em dourado */
-  padding: 20px;
-  text-align: center;
-  border-bottom: 3px solid #ffc107; /* Borda dourada de destaque */
+  background-color: #000000; /* Preto mais escuro para o cabeçalho */
+  color: #ffc107; /* Título em dourado */
+  padding: 20px;
+  text-align: center;
+  border-bottom: 3px solid #ffc107; /* Borda dourada de destaque */
 }
 
 h1 {
-  margin: 0;
+  margin: 0;
 }
 
-h2, h3, h4 {
-  color: #ffc107; /* Títulos de seção em dourado */
-  border-bottom: 2px solid #333333;
-  padding-bottom: 5px;
-  margin-top: 20px;
+h2, h3, h4, h5 {
+  color: #ffc107; /* Títulos de seção em dourado */
+  border-bottom: 2px solid #333333;
+  padding-bottom: 5px;
+  margin-top: 20px;
+}
+h5 {
+    font-size: 1.1em;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 10px;
 }
 
 /* --- Navegação (Menu) --- */
 #menuNav {
-  display: flex;
-  justify-content: center;
-  background-color: #2c2c2c; /* Fundo do menu cinza escuro */
-  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  background-color: #2c2c2c; /* Fundo do menu cinza escuro */
+  padding: 10px 0;
 }
 
 #menuNav button {
-  background-color: #444444;
-  color: #eeeeee;
-  border: none;
-  padding: 10px 15px;
-  margin: 0 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s, color 0.3s;
-  border-radius: 5px;
+  background-color: #444444;
+  color: #eeeeee;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
 }
 
 #menuNav button:hover {
-  background-color: #ffc107; /* Fundo dourado ao passar o mouse */
-  color: #1a1a1a; /* Texto preto no hover */
+  background-color: #ffc107; /* Fundo dourado ao passar o mouse */
+  color: #1a1a1a; /* Texto preto no hover */
 }
 
 /* --- Abas e Cards --- */
 .aba {
-  display: none;
-  padding: 20px;
-  max-width: 800px;
-  margin: 20px auto;
+  display: none;
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
 }
 
 .aba.ativa {
-  display: block;
+  display: block;
 }
 
 .card {
-  background-color: #2c2c2c; /* Fundo das abas em cinza escuro */
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  border: 1px solid #444444;
+  background-color: #2c2c2c; /* Fundo das abas em cinza escuro */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border: 1px solid #444444;
 }
 
 /* --- Formulários e Inputs --- */
 label {
-  display: block;
-  margin-bottom: 15px;
-  font-weight: bold;
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
 input[type="text"],
@@ -88,125 +94,156 @@ input[type="email"],
 input[type="number"],
 select,
 textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ffc107; /* Borda dourada */
-  background-color: #333333; /* Fundo do input em cinza */
-  color: #eeeeee;
-  border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical; /* Permite redimensionar textarea verticalmente */
-  font-family: inherit;
-  font-size: 1em;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ffc107; /* Borda dourada */
+  background-color: #333333; /* Fundo do input em cinza */
+  color: #eeeeee;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical; /* Permite redimensionar textarea verticalmente */
+  font-family: inherit;
+  font-size: 1em;
 }
 
 /* Botão de submit do formulário */
 form button[type="submit"] {
-  background-color: #ffc107; /* Botão principal dourado */
-  color: #1a1a1a; /* Texto preto */
-  border: none;
-  padding: 12px 20px;
-  margin-top: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 4px;
-  transition: opacity 0.3s;
+  background-color: #ffc107; /* Botão principal dourado */
+  color: #1a1a1a; /* Texto preto */
+  border: none;
+  padding: 12px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: opacity 0.3s;
 }
 
 form button[type="submit"]:hover {
-  opacity: 0.9;
+  opacity: 0.9;
 }
 
 /* --- Tabelas (Respostas e Criadores) --- */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 th, td {
-  border: 1px solid #444444; /* Borda da tabela */
-  padding: 12px;
-  text-align: left;
+  border: 1px solid #444444; /* Borda da tabela */
+  padding: 12px;
+  text-align: left;
 }
 
 th {
-  background-color: #1a1a1a; /* Fundo do cabeçalho da tabela preto */
-  color: #ffc107; /* Texto do cabeçalho em dourado */
-  text-transform: uppercase;
+  background-color: #1a1a1a; /* Fundo do cabeçalho da tabela preto */
+  color: #ffc107; /* Texto do cabeçalho em dourado */
+  text-transform: uppercase;
 }
 
 /* Linhas da tabela com contraste */
 tr:nth-child(even) {
-  background-color: #333333;
+  background-color: #333333;
 }
 
 tr:nth-child(odd) {
-  background-color: #2c2c2c;
+  background-color: #2c2c2c;
 }
 
 /* --- Estilo para o link-btn na área do criador (Lista de nomes) --- */
 .link-btn {
-  background: none;
-  border: none;
-  color: #ffc107; /* Dourado para os nomes clicáveis */
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 5px 0;
-  font-size: 1em;
-  text-align: left;
-  display: block;
-  transition: color 0.2s;
+  background: none;
+  border: none;
+  color: #ffc107; /* Dourado para os nomes clicáveis */
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 5px 0;
+  font-size: 1em;
+  text-align: left;
+  display: block;
+  transition: color 0.2s;
 }
 
 .link-btn:hover {
-  color: #ffee00; /* Dourado mais claro no hover */
+  color: #ffee00; /* Dourado mais claro no hover */
 }
 
 /* Lista de nomes no Criador */
 #dadosCriadores ul {
-  list-style: none;
-  padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 #dadosCriadores li {
-  margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 /* Linha separadora */
 hr {
-  border: 0;
-  height: 1px;
-  background-color: #444444;
-  margin: 20px 0;
+  border: 0;
+  height: 1px;
+  background-color: #444444;
+  margin: 20px 0;
 }
 
 /* --- Rodapé --- */
 footer {
-  text-align: center;
-  padding: 15px;
-  background-color: #000000;
-  color: #666666; /* Cinza suave para o texto do rodapé */
-  margin-top: 30px;
-  border-top: 1px solid #333333;
+  text-align: center;
+  padding: 15px;
+  background-color: #000000;
+  color: #666666; /* Cinza suave para o texto do rodapé */
+  margin-top: 30px;
+  border-top: 1px solid #333333;
 }
 
-/* --- Estilo específico para a nova aba de alimentação (cardápio) --- */
+/* --- Estilo específico para a aba de alimentação (cardápio) --- */
 #aba-alimentacao textarea {
-  min-height: 120px;
+  min-height: 120px;
 }
 
-#resultadoAlimentacao p {
-  font-size: 1.1em;
-  line-height: 1.4em;
-  margin-top: 10px;
+/* Novo botão de cardápio */
+.link-btn-cardapio {
+    background-color: #4CAF50; /* Verde para destacar a dica alimentar */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
 }
 
-#resultadoAlimentacao h3 {
-  margin-top: 20px;
-  color: #ffc107;
+.link-btn-cardapio:hover {
+    background-color: #45a049;
 }
 
+/* Estilo para a lista gerada no cardápio */
+#cardapioOpcoes ul {
+    list-style-type: '👉 ';
+    padding-left: 20px;
+}
+#cardapioOpcoes li {
+    margin-bottom: 5px;
+    color: #cccccc;
+}
+
+/* Aviso/Alerta de Recomendações (Para uso no JavaScript) */
+.alerta {
+    padding: 15px;
+    margin-top: 25px;
+    border-left: 5px solid #ffc107; /* Linha lateral dourada */
+    background-color: #333333; /* Fundo cinza escuro para contraste */
+    color: #ffc107; /* Texto em dourado */
+    font-weight: bold;
+    font-size: 0.95em;
+    border-radius: 4px;
+}
+.alerta strong {
+    color: #eeeeee; /* Destaca a palavra-chave em branco */
+}
