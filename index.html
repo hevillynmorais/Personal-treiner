@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Escritório Personal Trainer</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
   <header>
@@ -14,14 +14,15 @@
   <nav id="menuNav">
     <button onclick="abrirAba('inicio')">🏠 Início</button>
     <button onclick="abrirAba('login')">👤 Login</button>
-    <button onclick="abrirAba('alimentacao')">🍎 Alimentação</button>      <button onclick="abrirAba('calculo')">📊 Cálculo</button>
+    <button onclick="abrirAba('alimentacao')">🍎 Alimentação</button>  
+    <button onclick="abrirAba('calculo')">📊 Cálculo</button>
     <button onclick="abrirAba('respostas')">✅ Respostas</button>
-    <button onclick="pedirSenha()">🔑 Criadores</button>
+    <button onclick="pedirSenhaCriador()">🔑 Criadores</button> 
   </nav>
 
   <section id="aba-inicio" class="aba card ativa">
     <h2>Bem-vindo!</h2>
-    <p>Use o menu acima para entrar, calcular seu IMC e receber recomendações personalizadas.</p>
+    <p>Use o menu acima para entrar, selecionar seu cardápio, calcular seu IMC e receber recomendações personalizadas.</p>
   </section>
 
   <section id="aba-login" class="aba card">
@@ -52,24 +53,21 @@
     </form>
   </section>
 
-    <section id="aba-alimentacao" class="aba card">
-    <h2>Cardápio Alimentar</h2>
-    
-    <button onclick="mostrarCardapioOpcoes()" type="button" class="link-btn-cardapio">
-      🍽️ Ver Guia de Opções Alimentares
-    </button>
+  <section id="aba-alimentacao" class="aba card">
+    <h2>Monte seu Prato Ideal</h2>
+    <p>Selecione os alimentos que você mais consome normalmente ou deseja incluir na sua dieta.</p>
 
-    <div id="cardapioOpcoes">
-          </div>
+    <form id="formSelecaoAlimentos">
+                <div id="cardapioInterativo">
+                    </div>
 
-    <h3>Análise Rápida de Hábito</h3>
-    <form id="formAlimentacao">
-      <label>O que você come normalmente?<br>
-        <textarea id="alimentos" rows="6" placeholder="Liste os alimentos que costuma consumir..." required></textarea>
-      </label>
-      <button type="submit">Analisar</button>
+        <div id="resumoSelecao">
+            <h3>Alimentos Selecionados:</h3>
+            <p id="listaSelecionados">Nenhum alimento selecionado.</p>
+        </div>
+
+        <button type="submit">Salvar Minha Seleção e Ir para Cálculo</button>
     </form>
-    <div id="resultadoAlimentacao"></div>
   </section>
 
   <section id="aba-calculo" class="aba card">
@@ -105,11 +103,6 @@
   <section id="aba-respostas" class="aba card">
     <h2>Resultados</h2>
     <div id="respostas"></div>
-  </section>
-
-  <section id="aba-criadores" class="aba card">
-    <h2>📂 Histórico de Alunos</h2>
-    <div id="dadosCriadores"></div>
   </section>
 
   <footer>
