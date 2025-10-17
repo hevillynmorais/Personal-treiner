@@ -1,28 +1,48 @@
 /**
  * criador.js
  * Lógica para o Painel do Criador.
- * Lê o 'pt_historico' do localStorage e exibe os dados dos alunos.
- * Funciona na mesma origem (mesma pasta/domínio) do index.html.
+ * (CÓDIGO ATUALIZADO COM A FUNÇÃO DE LIMPEZA)
  */
 
 const listaAlunosContainer = document.getElementById('listaAlunosContainer');
 const detalhesAlunoDiv = document.getElementById('detalhesAluno');
 
 // Tenta ler o histórico completo de alunos
-// O 'pt_historico' é salvo pelo script.js do site do aluno
-const historico = JSON.parse(localStorage.getItem('pt_historico') || '[]');
+let historico = JSON.parse(localStorage.getItem('pt_historico') || '[]');
 
 
-// --- FUNÇÃO PRINCIPAL: CARREGAR LISTA DE ALUNOS ---
+// --- FUNÇÃO DE LIMPEZA DE DADOS (NOVA) ---
+function limparDadosHistorico() {
+    // Pede confirmação antes de apagar TUDO
+    const confirmacao = confirm("ATENÇÃO: Você tem certeza que deseja limpar TODO o histórico de alunos (pt_historico) e o usuário atual (pt_usuario)? Esta ação é IRREVERSÍVEL neste navegador.");
+    
+    if (confirmacao) {
+        // Remove a chave do histórico completo de alunos
+        localStorage.removeItem('pt_historico');
+        
+        // Remove o usuário da sessão atual (se houver)
+        localStorage.removeItem('pt_usuario');
+        
+        // Atualiza a variável local para refletir a mudança
+        historico = []; 
+        
+        alert("Histórico e dados de sessão limpos com sucesso. A página será recarregada.");
+        
+        // Recarrega a página para mostrar a lista vazia
+        window.location.reload(); 
+    }
+}
+
+
+// --- FUNÇÃO PRINCIPAL: CARREGAR LISTA ---
 function carregarListaAlunos() {
-    listaAlunosContainer.innerHTML = ''; // Limpa o "Carregando dados..."
+    listaAlunosContainer.innerHTML = ''; 
     
     if (historico.length === 0) {
         listaAlunosContainer.innerHTML = '<p style="color: #ffc107;">Nenhum aluno registrou dados ainda.</p>';
         return;
     }
 
-    // Cria a estrutura de lista
     const ul = document.createElement('ul');
     ul.style.listStyle = 'none';
     ul.style.padding = '0';
@@ -31,13 +51,9 @@ function carregarListaAlunos() {
         const li = document.createElement('li');
         li.style.marginBottom = '8px';
         
-        // Cria um botão (link-btn estilizado no style.css)
         const btn = document.createElement('button');
         btn.className = 'link-btn';
-        // Exibe Nome e Série
         btn.textContent = `${aluno.nome} (${aluno.serie}º ano) - ${aluno.email || 'Sem Email'}`; 
-        
-        // Chama a função de exibição de detalhes ao clicar
         btn.onclick = () => exibirDetalhesAluno(index);
         
         li.appendChild(btn);
@@ -48,7 +64,7 @@ function carregarListaAlunos() {
 }
 
 
-// --- FUNÇÃO: EXIBIR DETALHES DO ALUNO SELECIONADO ---
+// --- FUNÇÃO: EXIBIR DETALHES DO ALUNO (Mantida) ---
 function exibirDetalhesAluno(index) {
     const aluno = historico[index];
     if (!aluno) {
@@ -56,21 +72,18 @@ function exibirDetalhesAluno(index) {
         return;
     }
 
-    // Pega os dados, usando 'N/A' se não foram preenchidos
     const imc = aluno.imc || 'N/A';
     const status = aluno.status || 'N/A';
     const peso = aluno.peso || 'N/A';
     const altura = aluno.altura || 'N/A';
-    // Divide os alimentos selecionados em um array para melhor formatação
     const alimentos = aluno.alimentosConsumidos || 'Nenhum alimento selecionado.';
     const exercicio = aluno.exercicio || 'N/A - Cálculo não realizado';
     const sono = aluno.sono || 'N/A - Cálculo não realizado';
     const alimentacaoRecomendada = aluno.alimentacaoRecomendada || 'N/A - Cálculo não realizado';
     const email = aluno.email || 'Não informado';
-    // Formata o objetivo
     const objetivo = aluno.objetivo ? aluno.objetivo.charAt(0).toUpperCase() + aluno.objetivo.slice(1).replace(/_/g, ' ') : 'N/A';
-    
-    // Geração do HTML detalhado
+
+
     detalhesAlunoDiv.innerHTML = `
         <h3>Dados Principais: ${aluno.nome}</h3>
         <table>
@@ -120,8 +133,8 @@ function exibirDetalhesAluno(index) {
 
 
 // --- INICIALIZAÇÃO ---
-// Inicia o carregamento da lista quando a página é carregada
 document.addEventListener('DOMContentLoaded', carregarListaAlunos);
 
-// Torna a função global para que o onclick no HTML (criado dinamicamente) possa chamá-la
+// Torna as funções globais (necessário para o onclick no HTML)
 window.exibirDetalhesAluno = exibirDetalhesAluno;
+window.limparDadosHistorico = limparDadosHistorico;
