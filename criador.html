@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Personal Trainer - Painel do Criador</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 style="text-align: left; border-bottom: none;">Painel do Criador</h1>
+            <a href="index.html" class="link-btn-back">← Voltar para a página inicial (Aluno)</a>
+        </header>
+
+        <hr>
+
+        <h2>Histórico de Alunos Registrados</h2>
+        <p>Clique no nome de um aluno na lista abaixo para visualizar seus dados de IMC, objetivo e a seleção de cardápio feita.</p>
+        
+        <div id="listaAlunosContainer">
+            <p>Carregando dados...</p>
+        </div>
+
+        <hr>
+
+        <h2>Detalhes Completos do Aluno</h2>
+        <div id="detalhesAluno" class="card" style="padding: 20px; background-color: #333333;">
+            <p>Selecione um aluno na lista acima para ver suas informações.</p>
+        </div>
+        
+    </div>
+
+    <footer>
+        <p>Painel Administrativo • Acesso via URL direta</p>
+    </footer>
+
+    <script src="criador.js"></script>
+</body>
+</html>
