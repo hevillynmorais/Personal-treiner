@@ -5,15 +5,47 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Personal Trainer - Painel do Criador</title>
     <link rel="stylesheet" href="style.css"> 
+    <style>
+        /* Estilo específico para o botão de limpeza no painel */
+        .btn-limpar {
+            background-color: #d9534f !important; /* Cor vermelha para indicar exclusão */
+            color: white !important;
+            font-weight: bold;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            float: right; /* Flutua o botão para a direita */
+            transition: opacity 0.3s;
+        }
+        .btn-limpar:hover {
+            opacity: 0.8;
+        }
+        /* Ajuste no header para acomodar o botão flutuante */
+        #criadorHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 20px;
+        }
+        #criadorHeader h1 {
+            border-bottom: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1 style="text-align: left; border-bottom: none;">Painel do Criador</h1>
+            <div id="criadorHeader">
+                <h1 style="text-align: left;">Painel do Criador</h1>
+                <button class="btn-limpar" onclick="limparDadosHistorico()">Limpar Todo o Histórico</button>
+            </div>
+            
             <a href="index.html" class="link-btn-back">← Voltar para a página inicial (Aluno)</a>
         </header>
-
-        <hr>
 
         <h2>Histórico de Alunos Registrados</h2>
         <p>Clique no nome de um aluno na lista abaixo para visualizar seus dados de IMC, objetivo e a seleção de cardápio feita.</p>
