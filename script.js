@@ -20,7 +20,7 @@ const cardapioCompleto = {
     },
     'Proteínas Animais (Magras)': {
         'Aves': ['Peito de frango (sem pele)', 'Cortes de peru', 'Coxa e Sobrecoxa (sem pele, assada)'],
-        'Peixes e Frutos do Mar': ['Salmão (rico em ômega-3)', 'Sardinha', 'Tilápia', 'Atum (conservado em água)', 'Camarão', 'Bacalhau'],
+        'Peixes e Frutos do Mar': ['Salmão (rico em ômagem-3)', 'Sardinha', 'Tilápia', 'Atum (conservado em água)', 'Camarão', 'Bacalhau'],
         'Carnes Vermelhas': ['Patinho', 'Alcatra', 'Músculo', 'Filé Mignon (cortes magros, com moderação)'],
         'Ovo': ['Cozido (excelente)', 'Mexido', 'Omelete', 'Frito (com pouco óleo)'],
     },
@@ -77,14 +77,14 @@ if(formLogin){
         const nome = document.getElementById('nome').value.trim();
         const serie = document.getElementById('serie').value;
         const sexo = document.getElementById('sexo').value;
-        const email = document.getElementById('email').value.trim();
+        const email = document.getElementById('email').value.trim(); // Pode ser vazio
 
-        if(!nome || !email){
-            alert('Por favor, preencha nome e email.');
+        if(!nome){ // APENAS O NOME É OBRIGATÓRIO
+            alert('Por favor, preencha seu nome para continuar.');
             return;
         }
 
-        usuarioAtual = { nome, serie, sexo, email, selecaoAlimentos: [] }; // Reset ou inicializa seleção
+        usuarioAtual = { nome, serie, sexo, email, selecaoAlimentos: [] }; // O email será "" (string vazia) se não preenchido
         localStorage.setItem('pt_usuario', JSON.stringify(usuarioAtual));
         
         // Se a pessoa logar de novo, recarrega a seleção
@@ -185,11 +185,11 @@ if(formSelecaoAlimentos) {
         // 2. Atualiza o registro no Histórico (importante para o Criador)
         const alimentosStr = alimentosSelecionados.join('; ');
         
-        let registro = historico.find(r => r.email === usuarioAtual.email);
+        let registro = historico.find(r => r.email === usuarioAtual.email && r.nome === usuarioAtual.nome);
         if (registro) {
             registro.alimentosConsumidos = alimentosStr;
         } else {
-             // Caso a pessoa vá para a alimentação antes de calcular IMC
+             // Cria um novo registro se não existir
              registro = {...usuarioAtual, alimentosConsumidos: alimentosStr};
              historico.push(registro);
         }
@@ -213,9 +213,13 @@ if(formCalculo){
         const peso = parseFloat(pesoStr.replace(',', '.'));
         const altura = parseFloat(alturaStr.replace(',', '.'));
 
-        if(!usuarioAtual || isNaN(peso) || peso <= 0 || isNaN(altura) || altura <= 0){
-            alert('Dados inválidos ou faça login primeiro!'); 
+        if(!usuarioAtual || !usuarioAtual.nome){
+            alert('Faça login primeiro na aba "Login".'); 
             return; 
+        }
+        if (isNaN(peso) || peso <= 0 || isNaN(altura) || altura <= 0){
+             alert('Por favor, preencha Peso e Altura corretamente.');
+             return;
         }
 
         const atividade = document.getElementById('atividade').value;
@@ -255,13 +259,13 @@ if(formCalculo){
 
         const registro = {
             ...usuarioAtual,
-            peso, altura,
+            peso: peso.toFixed(2), altura: altura.toFixed(3),
             imc: imc.toFixed(2),
             status, exercicio, sono, alimentacaoRecomendada,
-            alimentosConsumidos: alimentosConsumidos // Adiciona os alimentos
+            alimentosConsumidos: alimentosConsumidos
         };
         
-        const historicoIndex = historico.findIndex(r => r.email === usuarioAtual.email);
+        const historicoIndex = historico.findIndex(r => r.email === usuarioAtual.email && r.nome === usuarioAtual.nome);
         if(historicoIndex > -1){
             historico[historicoIndex] = registro; // Atualiza registro existente
         } else {
@@ -272,7 +276,7 @@ if(formCalculo){
 
         // Geração do HTML de Respostas
         const imcFormula = `IMC = Peso (kg) / [Altura (m)]²`;
-        const imcCalculo = `IMC = ${peso} / (${altura.toFixed(3)} \u00D7 ${altura.toFixed(3)}) = ${imc.toFixed(2)}`;
+        const imcCalculo = `IMC = ${peso.toFixed(2)} / (${altura.toFixed(3)} \u00D7 ${altura.toFixed(3)}) = ${imc.toFixed(2)}`;
 
         respostasDiv.innerHTML = `
             <h3>Detalhamento do Cálculo</h3>
@@ -283,7 +287,7 @@ if(formCalculo){
             <table>
                 <tr><th>CAMPO</th><th>VALOR</th></tr>
                 <tr><td>Nome</td><td>${registro.nome}</td></tr>
-                <tr><td>Email</td><td>${registro.email}</td></tr>
+                <tr><td>Email</td><td>${registro.email || 'Não informado'}</td></tr>
                 <tr><td>IMC</td><td>${registro.imc}</td></tr>
                 <tr><td>Status</td><td>${registro.status}</td></tr>
                 <tr><td>Objetivo</td><td>${objetivo.charAt(0).toUpperCase() + objetivo.slice(1).replace('_', ' ')}</td></tr>
@@ -302,15 +306,17 @@ if(formCalculo){
 }
 
 
-// --- REDIRECIONAMENTO PARA O SITE DO CRIADOR ---
+// --- REDIRECIONAMENTO PARA O SITE DO CRIADOR (Função removida do menu, mas mantida caso queira acessar por outro meio)---
+/*
 function pedirSenhaCriador(){
     const senha = prompt('Digite a senha de acesso:');
-    if(senha === '2anoA'){ // Senha para o modo criador/admin
+    if(senha === '2anoA'){ 
         window.location.href = 'criador.html';
     } else if(senha !== null) {
         alert('Senha incorreta!');
     }
 }
+*/
 
 
 // --- INICIALIZAÇÃO GERAL ---
@@ -327,11 +333,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Gera o cardápio interativo na aba Alimentação
-    gerarCardapioInterativo();
+    if(cardapioDiv) {
+        gerarCardapioInterativo();
+    }
 });
 
 // Torna as funções globais (necessário para o onchange nos checkboxes)
-window.pedirSenhaCriador = pedirSenhaCriador;
 window.abrirAba = abrirAba;
 window.atualizarResumoSelecao = atualizarResumoSelecao; 
 window.gerarCardapioInterativo = gerarCardapioInterativo;
+// window.pedirSenhaCriador = pedirSenhaCriador; <-- REMOVIDO para limpar o escopo global
