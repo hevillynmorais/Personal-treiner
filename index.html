@@ -14,9 +14,8 @@
   <nav id="menuNav">
     <button onclick="abrirAba('inicio')">🏠 Início</button>
     <button onclick="abrirAba('login')">👤 Login</button>
-    <button onclick="abrirAba('calculo')">📊 Cálculo</button>
+    <button onclick="abrirAba('alimentacao')">🍎 Alimentação</button>      <button onclick="abrirAba('calculo')">📊 Cálculo</button>
     <button onclick="abrirAba('respostas')">✅ Respostas</button>
-    <button onclick="abrirAba('alimentacao')">🍎 Alimentação</button>
     <button onclick="pedirSenha()">🔑 Criadores</button>
   </nav>
 
@@ -53,6 +52,26 @@
     </form>
   </section>
 
+    <section id="aba-alimentacao" class="aba card">
+    <h2>Cardápio Alimentar</h2>
+    
+    <button onclick="mostrarCardapioOpcoes()" type="button" class="link-btn-cardapio">
+      🍽️ Ver Guia de Opções Alimentares
+    </button>
+
+    <div id="cardapioOpcoes">
+          </div>
+
+    <h3>Análise Rápida de Hábito</h3>
+    <form id="formAlimentacao">
+      <label>O que você come normalmente?<br>
+        <textarea id="alimentos" rows="6" placeholder="Liste os alimentos que costuma consumir..." required></textarea>
+      </label>
+      <button type="submit">Analisar</button>
+    </form>
+    <div id="resultadoAlimentacao"></div>
+  </section>
+
   <section id="aba-calculo" class="aba card">
     <h2>Calcular IMC e Meta</h2>
     <form id="formCalculo">
@@ -86,17 +105,6 @@
   <section id="aba-respostas" class="aba card">
     <h2>Resultados</h2>
     <div id="respostas"></div>
-  </section>
-
-  <section id="aba-alimentacao" class="aba card">
-    <h2>Cardápio Alimentar</h2>
-    <form id="formAlimentacao">
-      <label>O que você come normalmente?<br>
-        <textarea id="alimentos" rows="6" placeholder="Liste os alimentos que costuma consumir..." required></textarea>
-      </label>
-      <button type="submit">Analisar</button>
-    </form>
-    <div id="resultadoAlimentacao"></div>
   </section>
 
   <section id="aba-criadores" class="aba card">
