@@ -64,6 +64,7 @@ h5 {
 
 /* --- Abas e Cards --- */
 .aba {
+    /* Estilo para as abas do index.html (Aluno) */
     display: none;
     padding: 20px;
     max-width: 800px;
@@ -125,7 +126,7 @@ form button[type="submit"]:hover {
     opacity: 0.9;
 }
 
-/* --- Tabelas --- */
+/* --- Tabelas (Usadas no index.html e criador.html) --- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -154,35 +155,8 @@ tr:nth-child(odd) {
     background-color: #2c2c2c;
 }
 
-/* --- Estilo para botões de navegação interna (Lista de nomes no criador) --- */
-.link-btn {
-    background: none;
-    border: none;
-    color: #ffc107; /* Dourado para os nomes clicáveis */
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 5px 0;
-    font-size: 1em;
-    text-align: left;
-    display: block;
-    transition: color 0.2s;
-}
+/* --- ESTILOS ESPECÍFICOS DO PAINEL DO CRIADOR (criador.html) --- */
 
-.link-btn:hover {
-    color: #ffee00; /* Dourado mais claro no hover */
-}
-
-/* Container do Criador (Usado no criador.html) */
-.container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 30px;
-    background-color: #2c2c2c;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    min-height: 500px;
-    border: 1px solid #444444;
-}
 /* Estilo para o botão de voltar no criador.html */
 .link-btn-back {
     background-color: #444444;
@@ -191,7 +165,7 @@ tr:nth-child(odd) {
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 4px;
-    text-decoration: none;
+    text-decoration: none; /* Remove sublinhado padrão do link */
     display: inline-block;
     margin-bottom: 20px;
     transition: background-color 0.3s;
@@ -200,8 +174,6 @@ tr:nth-child(odd) {
     background-color: #ffc107;
     color: #1a1a1a;
 }
-/* Fim do estilo do Criador */
-
 
 /* Linha separadora */
 hr {
@@ -221,18 +193,16 @@ footer {
     border-top: 1px solid #333333;
 }
 
-/* --- Estilo específico para a aba de alimentação (o cardápio) --- */
-
-/* Estilo para as caixas de categoria dentro da aba alimentação */
+/* --- Estilo específico para a aba de alimentação (o cardápio no index.html) --- */
 .categoria-alimento {
     padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid #444444 !important; /* Prioriza a borda discreta */
-    background-color: #333333 !important; /* Fundo um pouco mais escuro */
+    border: 1px solid #444444 !important; 
+    background-color: #333333 !important; 
 }
 
 .categoria-alimento h4 {
-    color: #eeeeee; /* Subtítulos brancos */
+    color: #eeeeee; 
     font-weight: normal;
     font-size: 1.1em;
     border-bottom: 1px dotted #555555;
@@ -240,21 +210,19 @@ footer {
     margin-bottom: 10px;
 }
 
-/* Estilo para os labels dos checkboxes */
 #cardapioInterativo label {
     margin-bottom: 8px;
     margin-right: 15px;
     cursor: pointer;
     color: #cccccc;
     transition: color 0.2s;
-    width: 200px; /* Limita a largura para melhor distribuição */
+    width: 200px; 
 }
 
 #cardapioInterativo label:hover {
     color: #ffc107;
 }
 
-/* Estilo para a caixa de resumo de seleção */
 #resumoSelecao {
     margin-top: 30px;
     padding: 20px;
@@ -271,7 +239,7 @@ footer {
     color: #999999;
 }
 
-/* Aviso/Alerta de Recomendações */
+/* Aviso/Alerta de Recomendações (Usado no index.html e criador.html) */
 .alerta {
     padding: 15px;
     margin-top: 25px;
