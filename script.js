@@ -89,6 +89,12 @@ if(formLogin){
         
         const emailDigitado = email.toLowerCase();
 
+        // Checa se o usuário pulou as opções obrigatórias (Série e Sexo)
+        if(!nome || !serie || !sexo) {
+            alert('Por favor, preencha Nome, Série e Sexo.');
+            return;
+        }
+
 
         // --- VERIFICAÇÃO DE ACESSO DO CRIADOR (GATILHO: SÉRIE 'A') ---
         if(serie === 'A'){
@@ -104,17 +110,17 @@ if(formLogin){
         }
         
         // --- PROCESSO NORMAL DE LOGIN DO ALUNO (SÉRIES 6 a 3 e C) ---
-        if(!nome){
-            alert('Por favor, preencha seu nome para continuar.');
-            return;
-        }
 
         usuarioAtual = { nome, serie, sexo, email: emailDigitado, selecaoAlimentos: [] }; 
         localStorage.setItem('pt_usuario', JSON.stringify(usuarioAtual));
         
+        // Se a pessoa logar de novo, recarrega a seleção
         if(document.getElementById('cardapioInterativo').children.length > 0){
             carregarSelecaoSalva(); 
         }
+        
+        // Limpa o formulário de login APÓS logar para que o próximo acesso seja limpo
+        formLogin.reset();
 
         abrirAba('alimentacao'); 
     });
@@ -158,12 +164,12 @@ function gerarCardapioInterativo() {
 /**
  * Atualiza a lista de alimentos selecionados em tempo real na aba.
  */
-function atualizarResumoSelecao() {
-    const selecionados = Array.from(document.querySelectorAll('#cardapioInterativo input[name="alimento"]:checked'))
+function actualizarResumoSelecao() {
+    const seleccionados = Array.from(document.querySelectorAll('#cardapioInterativo input[name="alimento"]:checked'))
                                 .map(checkbox => checkbox.value);
     
-    if (selecionados.length > 0) {
-        listaSelecionadosP.innerHTML = selecionados.join('; ');
+    if (seleccionados.length > 0) {
+        listaSelecionadosP.innerHTML = seleccionados.join('; ');
     } else {
         listaSelecionadosP.innerHTML = 'Nenhum alimento selecionado.';
     }
@@ -179,7 +185,7 @@ function carregarSelecaoSalva() {
         checkboxes.forEach(checkbox => {
             checkbox.checked = usuarioAtual.selecaoAlimentos.includes(checkbox.value);
         });
-        atualizarResumoSelecao(); 
+        actualizarResumoSelecao(); 
     }
 }
 
@@ -248,6 +254,10 @@ if(formCalculo){
 
         const atividade = document.getElementById('atividade').value;
         const objetivo = document.getElementById('objetivo').value;
+        if (!atividade || !objetivo) {
+            alert('Por favor, selecione seu Nível de Atividade e Objetivo.');
+            return;
+        }
 
         // Lógica de cálculo
         const imc = peso / (altura * altura);
@@ -287,14 +297,14 @@ if(formCalculo){
             imc: imc.toFixed(2),
             status, exercicio, sono, alimentacaoRecomendada,
             alimentosConsumidos: alimentosConsumidos,
-            objetivo: objetivo // Adicionado o objetivo ao registro
+            objetivo: objetivo
         };
         
         const historicoIndex = historico.findIndex(r => r.email === usuarioAtual.email && r.nome === usuarioAtual.nome);
         if(historicoIndex > -1){
-            historico[historicoIndex] = registro; // Atualiza registro existente
+            historico[historicoIndex] = registro; 
         } else {
-            historico.push(registro); // Adiciona novo registro
+            historico.push(registro); 
         }
 
         localStorage.setItem('pt_historico', JSON.stringify(historico)); 
@@ -331,18 +341,16 @@ if(formCalculo){
 }
 
 
-// --- INICIALIZAÇÃO GERAL ---
+// --- INICIALIZAÇÃO GERAL (CORRIGIDA) ---
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicia sempre na aba 'inicio'
     abrirAba('inicio'); 
     
-    // Pré-preenche o formulário de login se houver dados salvos
-    if (usuarioAtual) {
-        document.getElementById('nome').value = usuarioAtual.nome || '';
-        document.getElementById('serie').value = usuarioAtual.serie || '6';
-        document.getElementById('sexo').value = usuarioAtual.sexo || 'M';
-        document.getElementById('email').value = usuarioAtual.email || '';
+    // Limpa o formulário de login no início para que não haja pré-seleção/preenchimento
+    if (document.getElementById('formLogin')) {
+        document.getElementById('formLogin').reset();
     }
-
+    
     if(cardapioDiv) {
         gerarCardapioInterativo();
     }
@@ -350,5 +358,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Torna as funções globais
 window.abrirAba = abrirAba;
-window.atualizarResumoSelecao = atualizarResumoSelecao; 
+window.actualizarResumoSelecao = actualizarResumoSelecao; 
 window.gerarCardapioInterativo = gerarCardapioInterativo;
