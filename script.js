@@ -1,7 +1,7 @@
 /**
  * script.js
  * Lógica para o Escritório Personal Trainer (Site do Aluno).
- * Inclui login, cálculo de IMC, recomendações e seleção de cardápio.
+ * INCLUI: Login de Aluno e Login Secreto do Criador.
  */
 
 // --- DADOS DO CARDÁPIO EXPANDIDO ---
@@ -63,31 +63,55 @@ function abrirAba(nome){
     document.querySelectorAll('.aba').forEach(a=>a.classList.remove('ativa'));
     const el = document.getElementById('aba-'+nome);
     if(el) el.classList.add('ativa');
-    // Se abrir a aba de alimentação, garante que o cardápio esteja carregado
     if (nome === 'alimentacao' && cardapioDiv && cardapioDiv.children.length === 0) {
         gerarCardapioInterativo();
     }
 }
 
 
-// --- LOGIN ---
+// --- LOGIN (LÓGICA CRUCIAL) ---
 if(formLogin){
     formLogin.addEventListener('submit', e=>{
         e.preventDefault();
         const nome = document.getElementById('nome').value.trim();
         const serie = document.getElementById('serie').value;
         const sexo = document.getElementById('sexo').value;
-        const email = document.getElementById('email').value.trim(); // Pode ser vazio
+        const email = document.getElementById('email').value.trim(); 
 
-        if(!nome){ // APENAS O NOME É OBRIGATÓRIO
+        // --- LISTA DE EMAILS AUTORIZADOS (CHAVE SECRETA) ---
+        const emailsCriadorAutorizados = [
+            "hevillyn.morais@escola.pr.gov.br",
+            "sexugi.isabelly@escola.pr.gov.br",
+            "jose.lino.chaves@escola.pr.gov.br",
+            "juliano.ramos.souza@escola.pr.gov.br",
+            "kemily.santos.luz@escola.pr.gov.br"
+        ];
+        
+        const emailDigitado = email.toLowerCase();
+
+
+        // --- VERIFICAÇÃO DE ACESSO DO CRIADOR (GATILHO: SÉRIE 'A') ---
+        if(serie === 'A'){
+            if(emailsCriadorAutorizados.includes(emailDigitado)){
+                // ACESSO CONCEDIDO: Redireciona para o painel do criador
+                window.location.href = 'criador.html';
+                return; 
+            } else {
+                // ACESSO NEGADO: Se tentou usar a série 'A' com email não autorizado
+                alert('Acesso negado: Este e-mail não está autorizado como Criador.');
+                return;
+            }
+        }
+        
+        // --- PROCESSO NORMAL DE LOGIN DO ALUNO (SÉRIES 6 a 3 e C) ---
+        if(!nome){
             alert('Por favor, preencha seu nome para continuar.');
             return;
         }
 
-        usuarioAtual = { nome, serie, sexo, email, selecaoAlimentos: [] }; // O email será "" (string vazia) se não preenchido
+        usuarioAtual = { nome, serie, sexo, email: emailDigitado, selecaoAlimentos: [] }; 
         localStorage.setItem('pt_usuario', JSON.stringify(usuarioAtual));
         
-        // Se a pessoa logar de novo, recarrega a seleção
         if(document.getElementById('cardapioInterativo').children.length > 0){
             carregarSelecaoSalva(); 
         }
@@ -97,7 +121,7 @@ if(formLogin){
 }
 
 
-// --- LÓGICA DE CARDÁPIO (Alimentação) ---
+// --- LÓGICA DE CARDÁPIO, CÁLCULO E RESPOSTAS (MANTIDA) ---
 
 /**
  * Gera o HTML dinâmico com todas as categorias e alimentos em checkboxes.
@@ -262,7 +286,8 @@ if(formCalculo){
             peso: peso.toFixed(2), altura: altura.toFixed(3),
             imc: imc.toFixed(2),
             status, exercicio, sono, alimentacaoRecomendada,
-            alimentosConsumidos: alimentosConsumidos
+            alimentosConsumidos: alimentosConsumidos,
+            objetivo: objetivo // Adicionado o objetivo ao registro
         };
         
         const historicoIndex = historico.findIndex(r => r.email === usuarioAtual.email && r.nome === usuarioAtual.nome);
@@ -306,22 +331,8 @@ if(formCalculo){
 }
 
 
-// --- REDIRECIONAMENTO PARA O SITE DO CRIADOR (Função removida do menu, mas mantida caso queira acessar por outro meio)---
-/*
-function pedirSenhaCriador(){
-    const senha = prompt('Digite a senha de acesso:');
-    if(senha === '2anoA'){ 
-        window.location.href = 'criador.html';
-    } else if(senha !== null) {
-        alert('Senha incorreta!');
-    }
-}
-*/
-
-
 // --- INICIALIZAÇÃO GERAL ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa a aba Início
     abrirAba('inicio'); 
     
     // Pré-preenche o formulário de login se houver dados salvos
@@ -332,14 +343,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('email').value = usuarioAtual.email || '';
     }
 
-    // Gera o cardápio interativo na aba Alimentação
     if(cardapioDiv) {
         gerarCardapioInterativo();
     }
 });
 
-// Torna as funções globais (necessário para o onchange nos checkboxes)
+// Torna as funções globais
 window.abrirAba = abrirAba;
 window.atualizarResumoSelecao = atualizarResumoSelecao; 
 window.gerarCardapioInterativo = gerarCardapioInterativo;
-// window.pedirSenhaCriador = pedirSenhaCriador; <-- REMOVIDO para limpar o escopo global
