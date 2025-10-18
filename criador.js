@@ -11,7 +11,7 @@ const detalhesAlunoDiv = document.getElementById('detalhesAluno');
 let historico = JSON.parse(localStorage.getItem('pt_historico') || '[]');
 
 
-// --- FUNÇÃO DE LIMPEZA DE DADOS (NOVA) ---
+// --- FUNÇÃO DE LIMPEZA DE DADOS ---
 function limparDadosHistorico() {
     const confirmacao = confirm("ATENÇÃO: Você tem certeza que deseja limpar TODO o histórico de alunos (pt_historico) e o usuário atual (pt_usuario)? Esta ação é IRREVERSÍVEL neste navegador.");
     
