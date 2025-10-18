@@ -17,7 +17,7 @@
     <button onclick="abrirAba('alimentacao')">🍎 Alimentação</button>  
     <button onclick="abrirAba('calculo')">📊 Cálculo</button>
     <button onclick="abrirAba('respostas')">✅ Respostas</button>
-      </nav>
+  </nav>
 
   <section id="aba-inicio" class="aba card ativa">
     <h2>Bem-vindo!</h2>
@@ -30,7 +30,7 @@
       <label>Nome:<br><input type="text" id="nome" required></label>
       <label>Série:<br>
         <select id="serie" required>
-          <option value="6">6º</option>
+          <option value="" disabled selected>Selecione sua Série</option>           <option value="6">6º</option>
           <option value="7">7º</option>
           <option value="8">8º</option>
           <option value="9">9º</option>
@@ -38,17 +38,17 @@
           <option value="2">2º Ensino Médio</option>
           <option value="3">3º Ensino Médio</option>
           <option value="C">Ensino Médio Completo</option>
-                    <option value="A">Série A (Acesso Criador)</option>
+          <option value="A">Série A</option>
         </select>
       </label>
       <label>Sexo:<br>
         <select id="sexo" required>
-          <option value="M">Masculino</option>
+          <option value="" disabled selected>Selecione seu Sexo</option>           <option value="M">Masculino</option>
           <option value="F">Feminino</option>
           <option value="O">Outro</option>
         </select>
       </label>
-      <label>Email (Opcional para Alunos/Obrigatório para Criadores):<br><input type="email" id="email"></label>
+      <label>Email (Opcional):<br><input type="email" id="email"></label>
       <button type="submit">Próximo</button>
     </form>
   </section>
@@ -78,6 +78,7 @@
 
       <label>Nível de atividade física:<br>
         <select id="atividade" required>
+          <option value="" disabled selected>Selecione seu nível</option>
           <option value="sedentario">Sedentário</option>
           <option value="leve">Leve (1-2x/semana)</option>
           <option value="moderado">Moderado (3-5x/semana)</option>
@@ -87,6 +88,7 @@
 
       <label>Objetivo principal:<br>
         <select id="objetivo" required>
+          <option value="" disabled selected>Selecione seu Objetivo</option>
           <option value="massa">Ganhar massa muscular</option>
           <option value="gordura">Perder gordura</option>
           <option value="manter">Manter peso e saúde</option>
