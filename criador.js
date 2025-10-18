@@ -1,7 +1,7 @@
 /**
  * criador.js
  * Lógica para o Painel do Criador.
- * (CÓDIGO ATUALIZADO COM A FUNÇÃO DE LIMPEZA)
+ * Lê o 'pt_historico' do localStorage e exibe os dados dos alunos.
  */
 
 const listaAlunosContainer = document.getElementById('listaAlunosContainer');
@@ -13,28 +13,23 @@ let historico = JSON.parse(localStorage.getItem('pt_historico') || '[]');
 
 // --- FUNÇÃO DE LIMPEZA DE DADOS (NOVA) ---
 function limparDadosHistorico() {
-    // Pede confirmação antes de apagar TUDO
     const confirmacao = confirm("ATENÇÃO: Você tem certeza que deseja limpar TODO o histórico de alunos (pt_historico) e o usuário atual (pt_usuario)? Esta ação é IRREVERSÍVEL neste navegador.");
     
     if (confirmacao) {
-        // Remove a chave do histórico completo de alunos
+        // Remove as chaves de dados do aluno e histórico
         localStorage.removeItem('pt_historico');
-        
-        // Remove o usuário da sessão atual (se houver)
         localStorage.removeItem('pt_usuario');
         
-        // Atualiza a variável local para refletir a mudança
         historico = []; 
         
         alert("Histórico e dados de sessão limpos com sucesso. A página será recarregada.");
         
-        // Recarrega a página para mostrar a lista vazia
         window.location.reload(); 
     }
 }
 
 
-// --- FUNÇÃO PRINCIPAL: CARREGAR LISTA ---
+// --- FUNÇÃO PRINCIPAL: CARREGAR LISTA DE ALUNOS ---
 function carregarListaAlunos() {
     listaAlunosContainer.innerHTML = ''; 
     
@@ -64,7 +59,7 @@ function carregarListaAlunos() {
 }
 
 
-// --- FUNÇÃO: EXIBIR DETALHES DO ALUNO (Mantida) ---
+// --- FUNÇÃO: EXIBIR DETALHES DO ALUNO ---
 function exibirDetalhesAluno(index) {
     const aluno = historico[index];
     if (!aluno) {
@@ -135,6 +130,5 @@ function exibirDetalhesAluno(index) {
 // --- INICIALIZAÇÃO ---
 document.addEventListener('DOMContentLoaded', carregarListaAlunos);
 
-// Torna as funções globais (necessário para o onclick no HTML)
 window.exibirDetalhesAluno = exibirDetalhesAluno;
 window.limparDadosHistorico = limparDadosHistorico;
